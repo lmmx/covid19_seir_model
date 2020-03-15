@@ -16,3 +16,7 @@ This is a [SEIR model](https://en.wikipedia.org/wiki/Compartmental_models_in_epi
 Here is a reproduction of the figure in appendix 2 (source: [tex](doc/seir_diagram.tex)/[pdf](doc/seir_diagram.pdf)):
 
 ![](doc/seir_diagram.png)
+
+## Next step
+
+- Use [skoba's simulation code](https://gist.github.com/skoba/abc760104be559881ab7269372bb03ea) to plot with matplotlib
