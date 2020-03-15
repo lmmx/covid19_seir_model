@@ -1,0 +1,59 @@
+\documentclass{article}
+
+% Everything between this point and the '\begin{document}' statement is the preamble
+
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{automata, positioning, arrows}
+
+\tikzset{
+	->,  % makes the edges directed
+	node distance=2cm, % specifies the minimum distance between two nodes. Change if necessary.
+	every state/.style={thick, fill=gray!10}, % sets the properties for each ’state’ node
+	}
+\tikzset{infectious/.style={fill=red!20}}
+\tikzset{symptomatic/.style={fill=blue!20}}
+\tikzset{isolated/.style={fill=green!20}}
+
+\title{COVID-19 SEIR model (Anderson et al., \textit{The Lancet}, 09 March 2020)}
+\author{Louis Maddox}
+\date{15th March 2020}
+
+% This is the end of the preamble
+
+\begin{document}
+
+\begin{figure}[ht] % ’ht’ tells LaTeX to place the figure ’here’ or at the top of the page
+	\centering % centers the figure
+	\begin{tikzpicture}
+		\node[state] (S) {$S$};
+		\node[state, right of = S] (E) {$E$};
+		\node[state, infectious, right of = E] (I1) {$I_1$};
+		\node[state, infectious, above right of = I1] (I2m) {$I_2$};
+		\node[state, infectious, right of = I2m] (I3m) {$I_3$};
+		\node[state, symptomatic, below right of = I1] (I2s) {$I_2$};
+		\node[state, symptomatic, right of = I2s] (I3s) {$I_3$};
+		\node[state, isolated, below of = I2s] (Y2) {$Y_2$};
+		\node[state, isolated, right of = Y2] (Y3) {$Y_3$};
+		\node[state, above right of = I3s] (R) {$R$};
+		
+		\draw
+			(S) edge[above] node [font=\large] {$\lambda$} (E)
+			(E) edge[above] node [font=\large] {$\sigma$} (I1)
+			(I1) edge[above] node [font=\large, xshift=-0.1cm] {$\gamma_1$} (I2m)
+			(I1) edge[above] node [font=\large] {$\gamma_1$} (I2s)
+			(I2s) edge[above] node [font=\large, xshift=0.2cm, yshift=-0.2cm] {$\alpha$} (Y2)
+			(I2s) edge[above] node [font=\large] {$\gamma_2$} (I3s)
+			(Y2) edge[above] node [font=\large] {$\gamma_2$} (Y3)
+			(I2m) edge[above] node [font=\large] {$\gamma_2$} (I3m)
+			(I3m) edge[above] node [font=\large] {$\gamma_3$} (R)
+			(I3s) edge[above] node [font=\large, xshift=-0.1cm] {$\gamma_3$} (R)
+			(Y3) edge[above] node [font=\large, xshift=0.2cm, yshift=-0.4cm] {$\gamma_3$} (R);
+	\end{tikzpicture}
+	\caption{Reproduction of Appendix 2 of Anderson et al. (2020). A flow chart of a simple SEIR model for COVID-19 of individual states and pathways. 
+	Top pathway (mild symptoms): individuals stay in the community and eventually recover. Bottom pathway (clear symptoms): individuals self-isolate (low effectiveness)
+	or go into mandatory isolation (at home or in a care facility) with higher effectiveness.}
+	\label{fig:my_label}
+\end{figure}
+\end{document}
